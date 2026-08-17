@@ -1,6 +1,10 @@
 import { BRAND, NAV } from '../config/content'
 
-/** Fixed hairline nav. Stays cream-on-deep over every section. */
+/**
+ * Fixed hairline nav. Readable over both grounds without a scroll
+ * listener — see the mix-blend-mode note in sections.css for what it
+ * actually renders as.
+ */
 export function Nav() {
   return (
     <header className="nav">

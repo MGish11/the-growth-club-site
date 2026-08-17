@@ -15,6 +15,13 @@
   gap: 1.5rem;
   padding: 1.25rem var(--gutter);
   color: var(--cream);
+  /* Difference blend so the fixed nav stays legible crossing both
+     grounds without a scroll listener. It does NOT render as cream:
+     the blend is |backdrop − source| per channel, so cream over the
+     cream sections lands on pure black (the point), and cream over
+     --deep lands on #e1b96b, a sandy gold. That gold is intentional —
+     no blend value can give black over cream and cream over navy at
+     the same time. Change --deep and the gold changes with it. */
   mix-blend-mode: difference;
 }
 
