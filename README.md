@@ -125,7 +125,24 @@ opacity 0→1 with a 20px rise.
 
 - Real imagery — `Work` renders numbered placeholders. Drop an `<img>`
   inside `.work__media-inner` and the parallax works as-is.
-- All copy in `config/content.ts` is placeholder written to the right
-  shape and length.
 - Contact form is a mailto link, not a form.
 - No blog / project detail routes — single page only.
+
+### Content that must be replaced before launch
+
+All copy in `config/content.ts` is placeholder sized to the layout. Most
+of it is harmless marketing prose, but these fields are deliberately
+generic and must not be filled in with anything approximate:
+
+| Field                | Why                                                |
+| -------------------- | -------------------------------------------------- |
+| `WORK[]`             | Named clients + results read as real case studies   |
+| `TESTIMONIAL`        | An attributed quote nobody said is a fake endorsement |
+| `ABOUT.stats`        | Track-record figures are factual claims             |
+| `BRAND.founded`      | Founding year                                       |
+| `BRAND.email/phone`  | Currently `example.com` and a reserved 555 number   |
+| `PRICING[].price`    | Structural only — yours to set                      |
+
+Use real, verifiable content with client sign-off where it names anyone,
+or cut the section. Filler that looks like a claim becomes a claim the
+moment the site is public.

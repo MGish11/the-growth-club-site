@@ -14,7 +14,7 @@ export function Hero() {
         <Reveal className="hero__meta" stagger>
           <p className="t-label">{BRAND.tagline}</p>
           <p className="t-label hero__meta-right">
-            EST. 2015 — {BRAND.year} <br /> AVAILABLE FOR Q3
+            EST. {BRAND.founded} — {BRAND.year} <br /> {BRAND.availability}
           </p>
         </Reveal>
 

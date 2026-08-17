@@ -1,0 +1,19 @@
+# Normalise line endings. Without this, checking out on Windows rewrites
+# every file to CRLF and any clone from another machine shows spurious
+# whole-file diffs.
+* text=auto eol=lf
+
+# Binary assets — never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.mp4 binary
+*.webm binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
