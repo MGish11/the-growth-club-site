@@ -1,0 +1,315 @@
+/* ─────────────────────────────────────────────────────────────
+   The Growth Club — design tokens
+
+   Type system traced from the Constantine reference (see README).
+   The three things that carry the look:
+     1. --track: -0.06em applied at EVERY size
+     2. text-align: justify on statement headings and body copy
+     3. the clip-path word wipe in a single accent color
+
+   Palette keeps the reference's tonal relationships — deep
+   primary / warm off-white / muted accent — on a forest hue.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --deep: #12362b; /* primary blocks, display type */
+  --cream: #efede3; /* page background */
+  --ink: #111111; /* body text on cream */
+  --accent: #8fa894; /* the wipe color — muted sage */
+  --accent-2: #7c9482; /* secondary text on deep */
+  --white: #ffffff;
+
+  --rule: #12362b33; /* 20% deep — hairlines on cream */
+  --wash: #12362b0d; /* 5% deep — faint fills */
+  --rule-inv: #efede333; /* 20% cream — hairlines on deep */
+
+  --font-display: 'Bebas Neue', Impact, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* The signature. Do not loosen these without a reason. */
+  --track: -0.06em;
+  --track-loose: -0.03em;
+
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --stack: clamp(5rem, 12vh, 10rem); /* vertical rhythm between sections */
+  --maxw: 96rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--deep);
+  color: var(--cream);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ————— Type scale ————————————————————————————————————————————
+   Measured from the reference at 1440w, expressed as clamp()
+   so it holds together down to mobile.
+   ─────────────────────────────────────────────────────────── */
+
+.t-display {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11.2vw, 10rem); /* 160px @ 1440 */
+  line-height: 0.9;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.t-subdisplay {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 4.9vw, 4.375rem); /* 70px @ 1440 */
+  line-height: 1.2;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* The justified uppercase statement block — the core move. */
+.t-statement {
+  font-size: clamp(1.375rem, 2.2vw, 2rem); /* 32px @ 1440 */
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.t-quote {
+  font-size: clamp(1.25rem, 1.95vw, 1.75rem); /* 28px */
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+}
+
+.t-section {
+  font-size: clamp(1.125rem, 1.67vw, 1.5rem); /* 24px */
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+}
+
+.t-eyebrow {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: var(--track-loose);
+  text-transform: uppercase;
+}
+
+.t-label {
+  font-size: 1rem; /* 16px */
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+}
+
+/* Body runs at line-height 1.2 and justified — deliberately tight.
+   The paragraph reads as a texture block, not as prose. */
+.t-body {
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: var(--track);
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.t-body--lg {
+  font-size: 1.125rem;
+}
+
+/* Section marker. Drawn with borders rather than the ↳ glyph —
+   U+21B3 is outside Inter's latin subset and falls back to a
+   mismatched face. */
+.marker::before {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 0.6em;
+  border-left: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-0.08em);
+}
+
+/* ————— Layout primitives ————————————————————————————————————— */
+
+.section {
+  padding-block: var(--stack);
+  padding-inline: var(--gutter);
+}
+
+.section--deep {
+  background: var(--deep);
+  color: var(--cream);
+}
+
+.section--flush {
+  padding-inline: 0;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  width: 100%;
+}
+
+.rule {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+}
+
+.section--deep .rule {
+  background: var(--rule-inv);
+}
+
+/* ————— Word wipe ————————————————————————————————————————————
+   Two stacked copies of the same word. The base sits in the
+   inherited color; the fill sits on top in --accent, clipped to
+   zero width, and ScrollTrigger opens the clip left → right.
+   The word recolors behind a hard edge rather than fading.
+   ─────────────────────────────────────────────────────────── */
+
+.wipe {
+  position: relative;
+  display: inline-block;
+  white-space: pre;
+}
+
+.wipe__fill {
+  position: absolute;
+  inset: 0;
+  color: var(--accent);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+/* ————— Reveal (appear-on-scroll) ————————————————————————————— */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  will-change: transform, opacity;
+}
+
+/* ————— Ticker ———————————————————————————————————————————————— */
+
+.ticker {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+}
+
+.ticker__track {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  will-change: transform;
+}
+
+.ticker__item {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* ————— Circular badge ———————————————————————————————————————— */
+
+.badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--badge-size, 150px);
+  height: var(--badge-size, 150px);
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+
+.badge__ring {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.badge__char {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  transform-origin: 0 0;
+}
+
+/* ————— Tilted decorative stack ——————————————————————————————— */
+
+.tilt {
+  transform: rotate(15deg);
+}
+
+.tilt--ghost {
+  position: absolute;
+  inset: 0;
+  opacity: 0.36;
+  transform: rotate(15deg) translate(1.5rem, 1.5rem);
+}
+
+/* ————— Motion preferences ———————————————————————————————————— */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .wipe__fill {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .ticker__track {
+    transform: none !important;
+  }
+
+  .badge__ring {
+    display: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

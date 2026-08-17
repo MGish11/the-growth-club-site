@@ -1,0 +1,431 @@
+/* ─────────────────────────────────────────────────────────────
+   Section layout. Tokens and type live in global.css — this file
+   is only grid and spacing.
+   ───────────────────────────────────────────────────────────── */
+
+/* ————— Nav ———————————————————————————————————————————————————— */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem var(--gutter);
+  color: var(--cream);
+  mix-blend-mode: difference;
+}
+
+.nav__links {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.nav__link,
+.nav__cta,
+.nav__brand {
+  transition: opacity 0.25s ease;
+}
+
+.nav__link:hover,
+.nav__cta:hover,
+.nav__brand:hover {
+  opacity: 0.55;
+}
+
+@media (max-width: 48rem) {
+  .nav__links {
+    display: none;
+  }
+}
+
+/* ————— Hero ——————————————————————————————————————————————————— */
+
+.hero {
+  padding-top: clamp(4.5rem, 10vh, 7rem); /* clears the fixed nav */
+  padding-bottom: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* No flex gap here — it would also apply between the two rules and
+     the ticker, which is a lot of dead space for no reason. The one
+     gap that is wanted lives on .hero__inner instead. */
+}
+
+.hero__inner {
+  padding-inline: var(--gutter);
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.hero__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.hero__meta-right {
+  text-align: right;
+  color: var(--accent-2);
+}
+
+/* Bebas at 0.82 line-height, sized to bleed to both gutters.
+   40vw is tuned to the 6-character wordmark — Bebas caps run about
+   0.42em wide, so 6 × 0.42 ≈ 2.5em ≈ the full measure. Change the
+   wordmark length and this needs retuning. */
+.hero__wordmark {
+  /* min() against vh so short-but-wide viewports shrink the wordmark
+     rather than pushing the ticker below the fold. */
+  font-size: clamp(4.5rem, min(36vw, 53vh), 36rem);
+  line-height: 0.82;
+  margin-left: -0.03em; /* optical: Bebas carries a left side bearing */
+  white-space: nowrap;
+}
+
+.hero__base {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-block: clamp(1.5rem, 3.5vh, 2.5rem);
+}
+
+.hero__pitch {
+  max-width: 34rem;
+  color: var(--accent-2);
+}
+
+.hero__badge {
+  flex: 0 0 auto;
+  color: var(--cream);
+}
+
+.hero__badge-dot {
+  font-size: 1.25rem;
+}
+
+.hero__ticker {
+  padding-block: 0.875rem;
+  color: var(--cream);
+}
+
+@media (max-width: 48rem) {
+  .hero__base {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ————— About —————————————————————————————————————————————————— */
+
+.about__eyebrow,
+.services__eyebrow,
+.work__eyebrow,
+.process__eyebrow,
+.pricing__eyebrow {
+  color: var(--accent-2);
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.about__statement {
+  color: var(--deep);
+  max-width: 68rem;
+  margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+.about__columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.about__rule {
+  margin-block: clamp(3rem, 8vh, 5rem);
+}
+
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.about__stat .t-subdisplay {
+  color: var(--deep);
+}
+
+.about__stat-label {
+  color: var(--accent-2);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 64rem) {
+  .about__columns,
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 40rem) {
+  .about__columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ————— Services ——————————————————————————————————————————————— */
+
+.services__row {
+  display: grid;
+  grid-template-columns: 6rem minmax(12rem, 1fr) minmax(0, 2fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+  padding-block: clamp(1.75rem, 4vh, 2.75rem);
+  border-top: 1px solid var(--rule-inv);
+}
+
+.services__row:last-child {
+  border-bottom: 1px solid var(--rule-inv);
+}
+
+.services__n {
+  color: var(--accent-2);
+}
+
+.services__body {
+  color: var(--accent-2);
+}
+
+@media (max-width: 48rem) {
+  .services__row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* ————— Work ——————————————————————————————————————————————————— */
+
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 3rem);
+}
+
+.work__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+/* The well clips the parallax mover — without overflow:hidden the
+   drift exposes an edge at the extremes. */
+.work__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--wash);
+  margin-bottom: 0.5rem;
+}
+
+.work__media-inner {
+  position: absolute;
+  inset: -12% 0; /* headroom for the drift */
+}
+
+.work__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--wash);
+  color: var(--accent-2);
+  border: 1px solid var(--rule);
+}
+
+.work__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.work__meta .t-section {
+  color: var(--deep);
+}
+
+.work__sector,
+.work__body {
+  color: var(--accent-2);
+}
+
+.work__result {
+  color: var(--deep);
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 48rem) {
+  .work__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ————— Process ———————————————————————————————————————————————— */
+
+.process__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.process__step {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule-inv);
+}
+
+.process__body {
+  color: var(--accent-2);
+  margin-top: 0.75rem;
+}
+
+.process__rule {
+  margin-block: clamp(3rem, 8vh, 5rem);
+}
+
+.process__quote {
+  max-width: 56rem;
+}
+
+.process__quote-text {
+  text-align: left;
+}
+
+.process__attrib {
+  color: var(--accent-2);
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 64rem) {
+  .process__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 40rem) {
+  .process__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ————— Pricing ———————————————————————————————————————————————— */
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+
+.pricing__tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--rule);
+  color: var(--deep);
+}
+
+.pricing__tier--featured {
+  background: var(--deep);
+  color: var(--cream);
+  border-color: var(--deep);
+}
+
+.pricing__price {
+  margin-top: 1rem;
+}
+
+.pricing__cadence,
+.pricing__body {
+  color: var(--accent-2);
+}
+
+.pricing__body {
+  margin-block: 1rem;
+}
+
+.pricing__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.pricing__cta {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+  transition: opacity 0.25s ease;
+}
+
+.pricing__cta:hover {
+  opacity: 0.55;
+}
+
+@media (max-width: 56rem) {
+  .pricing__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ————— Contact ———————————————————————————————————————————————— */
+
+.contact__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.contact__details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.contact__body {
+  max-width: 40rem;
+  color: var(--accent-2);
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.contact__display {
+  font-size: clamp(4rem, 21vw, 19rem);
+  line-height: 0.82;
+  margin-left: -0.03em;
+  margin-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.contact__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.25rem;
+  color: var(--accent-2);
+}
+
+.contact__links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+@media (max-width: 48rem) {
+  .contact__foot,
+  .contact__links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
