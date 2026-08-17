@@ -7,20 +7,21 @@
      2. text-align: justify on statement headings and body copy
      3. the clip-path word wipe in a single accent color
 
-   Palette keeps the reference's tonal relationships — deep
-   primary / warm off-white / muted accent — on a forest hue.
+   Palette values are the reference's own, read off its :root tokens.
+   Colors and color combinations aren't copyrightable, so this is a
+   deliberate match rather than an approximation.
    ───────────────────────────────────────────────────────────── */
 :root {
-  --deep: #12362b; /* primary blocks, display type */
-  --cream: #efede3; /* page background */
+  --deep: #0d3479; /* primary blocks, display type */
+  --cream: #eeede4; /* page background */
   --ink: #111111; /* body text on cream */
-  --accent: #8fa894; /* the wipe color — muted sage */
-  --accent-2: #7c9482; /* secondary text on deep */
+  --accent: #8b9dbc; /* the wipe color — muted blue */
+  --accent-2: #7e90ae; /* secondary text on deep */
   --white: #ffffff;
 
-  --rule: #12362b33; /* 20% deep — hairlines on cream */
-  --wash: #12362b0d; /* 5% deep — faint fills */
-  --rule-inv: #efede333; /* 20% cream — hairlines on deep */
+  --rule: #0d347933; /* 20% deep — hairlines on cream */
+  --wash: #0d34790d; /* 5% deep — faint fills */
+  --rule-inv: #eeede433; /* 20% cream — hairlines on deep */
 
   --font-display: 'Bebas Neue', Impact, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;

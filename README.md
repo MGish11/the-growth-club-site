@@ -16,10 +16,10 @@ Registered in `../.claude/launch.json` as `growth-club`.
 
 The type system and scroll behaviour were traced from the **Constantine**
 Framer template (`constantine.framer.ai`) by measuring the live DOM — not
-copied from it. No assets, code, copy or branding came across; the palette
-is different and the content is ours. What was taken is technique, which
-isn't protectable: negative tracking, justified headings, a clip-path word
-reveal.
+copied from it. No assets, code, copy or branding came across, and the
+content is ours. What was taken is technique and palette values, neither
+of which is protectable: negative tracking, justified headings, a
+clip-path word reveal, and a set of hex codes.
 
 If you want the original as a reference it's $49 on the Framer marketplace.
 
@@ -55,19 +55,24 @@ All sizes are `clamp()`ed so they hold down to 375px.
 
 ## Palette
 
-Same tonal roles as the reference (deep primary / warm off-white / muted
-accent), shifted off its navy onto a forest hue.
+The reference's own values, read off its `:root` tokens. Colors and
+color combinations aren't copyrightable, so matching them is fine — the
+line stays at its assets, code, copy and branding, none of which are
+here.
 
 | Token         | Value       | Role                        |
 | ------------- | ----------- | --------------------------- |
-| `--deep`      | `#12362b`   | primary blocks, display type |
-| `--cream`     | `#efede3`   | page background             |
+| `--deep`      | `#0d3479`   | primary blocks, display type |
+| `--cream`     | `#eeede4`   | page background             |
 | `--ink`       | `#111111`   | body text on cream          |
-| `--accent`    | `#8fa894`   | the wipe color              |
-| `--accent-2`  | `#7c9482`   | secondary text on deep      |
-| `--rule`      | `#12362b33` | hairlines on cream          |
-| `--wash`      | `#12362b0d` | faint fills                 |
-| `--rule-inv`  | `#efede333` | hairlines on deep           |
+| `--accent`    | `#8b9dbc`   | the wipe color              |
+| `--accent-2`  | `#7e90ae`   | secondary text on deep      |
+| `--rule`      | `#0d347933` | hairlines on cream          |
+| `--wash`      | `#0d34790d` | faint fills                 |
+| `--rule-inv`  | `#eeede433` | hairlines on deep           |
+
+Everything is tokenised — recoloring the whole site means editing these
+eight values and nothing else.
 
 ## Components
 
