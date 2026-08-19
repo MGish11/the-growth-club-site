@@ -468,6 +468,7 @@ button.piece:focus-visible .piece__media img {
   width: 1px;
   height: 1px;
   padding: 0;
+  border: 0; /* inputs carry a UA border that survives the 1px box */
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;

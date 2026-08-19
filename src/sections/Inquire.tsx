@@ -2,12 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { INQUIRY, PROJECT_TYPES } from '../config/content'
 import { Reveal } from '../components/Reveal'
 
-const MAX_FILE_MB = 10
-const MAX_TOTAL_MB = 25
+/**
+ * FormSubmit caps everything attached to one submission at 10 MB. These sit
+ * under that so a submission is refused here, with a message, rather than
+ * rejected downstream after the page has already navigated.
+ */
+const MAX_FILE_MB = 8
+const MAX_TOTAL_MB = 9
 const MAX_FILES = 10
 const ACCEPT = 'image/*,.pdf,.svg'
 
-type Status = 'idle' | 'sending' | 'sent' | 'failed' | 'unconfigured'
+/** Marker `_next` carries back, so the return trip can show the receipt. */
+const SENT = 'sent'
 
 type Picked = { file: File; url: string | null }
 
@@ -17,20 +23,40 @@ const describe = (f: File) => `${f.name} · ${mb(f.size).toFixed(1)} MB`
 /**
  * Inquiry form: a few text fields plus logo and reference uploads.
  *
- * The site is static, so submission goes to a form backend as a multipart
- * POST — see INQUIRY.endpoint. With no endpoint set the form says so
- * rather than pretending it sent anything.
+ * This submits NATIVELY rather than through fetch. FormSubmit only accepts
+ * attachments on a real multipart POST — its AJAX endpoint answers in JSON
+ * but discards files — so the page navigates away and `_next` brings it
+ * back with ?sent=1, which is what renders the thank-you line.
  *
- * Files are held in component state rather than left to the native input,
- * so a second pick adds to the selection instead of replacing it — which
- * is what people expect after attaching one photo at a time.
+ * Files are still held in React state so a second pick adds to the
+ * selection instead of replacing it, and so previews can be shown. The
+ * accumulated list is written back into the native inputs through a
+ * DataTransfer before submit; without that, the POST would carry only
+ * whatever the last pick happened to contain.
  */
 export function Inquire() {
   const [picked, setPicked] = useState<Picked[]>([])
   const [logo, setLogo] = useState<Picked | null>(null)
-  const [status, setStatus] = useState<Status>('idle')
   const [problem, setProblem] = useState('')
-  const formRef = useRef<HTMLFormElement>(null)
+  const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [returnTo, setReturnTo] = useState('')
+
+  const logoRef = useRef<HTMLInputElement>(null)
+  const filesRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    if (url.searchParams.get(SENT) === '1') {
+      setSent(true)
+      // Drop the marker so a refresh does not re-show the receipt.
+      url.searchParams.delete(SENT)
+      window.history.replaceState(null, '', `${url.pathname}${url.search}#inquire`)
+    }
+    const back = new URL(import.meta.env.BASE_URL, window.location.origin)
+    back.searchParams.set(SENT, '1')
+    setReturnTo(back.toString())
+  }, [])
 
   // Object URLs leak if the component unmounts with files still selected.
   useEffect(
@@ -40,6 +66,22 @@ export function Inquire() {
     },
     [picked, logo],
   )
+
+  // Mirror state back into the native inputs — this is what actually gets
+  // posted. Guarded because DataTransfer is absent in non-browser contexts.
+  useEffect(() => {
+    if (typeof DataTransfer === 'undefined') return
+    if (filesRef.current) {
+      const dt = new DataTransfer()
+      picked.forEach((p) => dt.items.add(p.file))
+      filesRef.current.files = dt.files
+    }
+    if (logoRef.current) {
+      const dt = new DataTransfer()
+      if (logo) dt.items.add(logo.file)
+      logoRef.current.files = dt.files
+    }
+  }, [picked, logo])
 
   const wrap = (file: File): Picked => ({
     file,
@@ -77,6 +119,10 @@ export function Inquire() {
       setProblem(`${file.name} is over ${MAX_FILE_MB} MB.`)
       return
     }
+    if (mb(file.size) + mb(picked.reduce((n, p) => n + p.file.size, 0)) > MAX_TOTAL_MB) {
+      setProblem(`Attachments come to more than ${MAX_TOTAL_MB} MB in total.`)
+      return
+    }
     if (logo?.url) URL.revokeObjectURL(logo.url)
     setProblem('')
     setLogo(wrap(file))
@@ -93,45 +139,22 @@ export function Inquire() {
     setLogo(null)
   }
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (!INQUIRY.endpoint) {
-      setStatus('unconfigured')
+      event.preventDefault()
+      setProblem(INQUIRY.unconfigured)
       return
     }
-
-    setStatus('sending')
-    const data = new FormData(event.currentTarget)
-    // The native inputs are cleared on every pick, so send from state.
-    data.delete('logo')
-    data.delete('attachments')
-    if (logo) data.append('logo', logo.file, logo.file.name)
-    picked.forEach((p) => data.append('attachments', p.file, p.file.name))
-
-    try {
-      const res = await fetch(INQUIRY.endpoint, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      })
-      if (!res.ok) throw new Error(String(res.status))
-      picked.forEach((p) => p.url && URL.revokeObjectURL(p.url))
-      if (logo?.url) URL.revokeObjectURL(logo.url)
-      setPicked([])
-      setLogo(null)
-      formRef.current?.reset()
-      setStatus('sent')
-    } catch {
-      setStatus('failed')
+    if (totalMb() > MAX_TOTAL_MB) {
+      event.preventDefault()
+      setProblem(`Attachments come to more than ${MAX_TOTAL_MB} MB in total.`)
+      return
     }
+    // Otherwise let the browser post it; the page navigates and returns.
+    setSending(true)
   }
 
-  const message =
-    problem ||
-    (status === 'sent' && INQUIRY.success) ||
-    (status === 'failed' && INQUIRY.error) ||
-    (status === 'unconfigured' && INQUIRY.unconfigured) ||
-    ''
+  const message = problem || (sent && INQUIRY.success) || ''
 
   return (
     <section className="section section--deep inquire" id="inquire">
@@ -143,7 +166,28 @@ export function Inquire() {
           <p className="t-body t-body--lg inquire__body">{INQUIRY.body}</p>
         </Reveal>
 
-        <form className="inquire__form" ref={formRef} onSubmit={onSubmit}>
+        <form
+          className="inquire__form"
+          method="POST"
+          action={INQUIRY.endpoint}
+          encType="multipart/form-data"
+          onSubmit={onSubmit}
+        >
+          {/* FormSubmit control fields. _honey is a bot trap: a real person
+              never sees it, so anything that fills it is discarded. */}
+          <input type="hidden" name="_subject" value={INQUIRY.subject} />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={returnTo} />
+          <input
+            className="u-sr"
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+
           <div className="field">
             <label className="t-label" htmlFor="q-name">
               Your name
@@ -220,6 +264,7 @@ export function Inquire() {
                 name="logo"
                 type="file"
                 accept={ACCEPT}
+                ref={logoRef}
                 onChange={(e) => setLogoFile(e.target.files)}
               />
               <span className="t-label drop__cue">
@@ -247,13 +292,11 @@ export function Inquire() {
                 type="file"
                 accept={ACCEPT}
                 multiple
-                onChange={(e) => {
-                  addFiles(e.target.files)
-                  e.target.value = ''
-                }}
+                ref={filesRef}
+                onChange={(e) => addFiles(e.target.files)}
               />
               <span className="t-label drop__cue">
-                Choose files — images or PDF, up to {MAX_FILE_MB} MB each
+                Choose files — images or PDF, {MAX_TOTAL_MB} MB total
               </span>
             </label>
 
@@ -277,12 +320,8 @@ export function Inquire() {
           </div>
 
           <div className="field field--wide inquire__actions">
-            <button
-              className="t-label inquire__submit"
-              type="submit"
-              disabled={status === 'sending'}
-            >
-              {status === 'sending' ? 'Sending…' : 'Send inquiry →'}
+            <button className="t-label inquire__submit" type="submit" disabled={sending}>
+              {sending ? 'Sending…' : 'Send inquiry →'}
             </button>
 
             <p className="t-body inquire__status" role="status" aria-live="polite">

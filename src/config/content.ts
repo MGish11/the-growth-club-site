@@ -322,16 +322,25 @@ export const PRICING = [
 /**
  * Project inquiry form.
  *
- * `endpoint` must be a form backend that accepts a multipart POST —
- * Formspree, Web3Forms, Basin and Formcarry all do. The site is static,
- * so there is nowhere for an upload to land without one, and the form
- * reports a configuration error rather than pretending to send.
+ * Delivery is FormSubmit, which forwards to the address in `endpoint` and
+ * needs no account. Two constraints drive the component's design:
  *
- * Check your provider's attachment limits against MAX_FILE_MB /
- * MAX_TOTAL_MB below; several free tiers are stingier than this.
+ *  - Attachments only survive a NATIVE multipart POST. FormSubmit's AJAX
+ *    endpoint returns JSON but drops files, so the form navigates on submit
+ *    rather than using fetch, and comes back via `_next`.
+ *  - Everything attached must total under 10 MB. The limits in Inquire.tsx
+ *    are set below that on purpose.
+ *
+ * FIRST SUBMISSION ACTIVATES THE ADDRESS: FormSubmit emails a confirmation
+ * link that has to be clicked once before anything is forwarded. Until then
+ * submissions go nowhere.
+ *
+ * After confirming, FormSubmit issues a random alias string. Swapping the
+ * address here for `https://formsubmit.co/<alias>` keeps the inbox out of
+ * the built JavaScript, where scrapers will otherwise find it.
  */
 export const INQUIRY = {
-  endpoint: '',
+  endpoint: 'https://formsubmit.co/kizunasolutionsgroup@gmail.com',
   eyebrow: 'Start a project',
   heading: 'TELL US WHAT YOU HAVE IN MIND',
   body: 'A few details and whatever you have already — a logo, photos, a site you like. It does not need to be organised. We read every one of these ourselves.',
@@ -344,6 +353,7 @@ export const INQUIRY = {
   success: 'Thank you — that came through. We reply to every inquiry within two working days.',
   error: 'That did not send. Email us directly and we will pick it up from there.',
   unconfigured: 'The form is not connected to a backend yet — set INQUIRY.endpoint in content.ts.',
+  subject: 'New inquiry from thegrowthclub.com',
 } as const
 
 export const PROJECT_TYPES = [
