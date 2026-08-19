@@ -19,11 +19,10 @@ export const BRAND = {
   /** Six characters. The hero font size is tuned to this length. */
   wordmark: 'GROWTH',
   tagline: 'Growth marketing for brands that are done guessing.',
-  /** PLACEHOLDER contact details — 555 is a reserved fictional range. */
-  email: 'hello@example.com',
-  phone: '+1 (555) 018 4420',
-  /** PLACEHOLDER founding year, shown in the hero. */
-  founded: 'YYYY',
+  email: 'kizunasolutionsgroup@gmail.com',
+  phone: '+1 (757) 647 2720',
+  /** Founding year, shown in the hero. */
+  founded: '2026',
   /** PLACEHOLDER availability line, shown in the hero. */
   availability: 'Availability line',
   year: new Date().getFullYear(),
@@ -37,14 +36,7 @@ export const NAV = [
   { label: 'Contact', href: '#contact' },
 ] as const
 
-export const TICKER_ITEMS = [
-  'PAID ACQUISITION',
-  'LIFECYCLE',
-  'CRO',
-  'BRAND',
-  'ANALYTICS',
-  'RETENTION',
-]
+export const TICKER_ITEMS = ['BUILD', 'REINVENT', 'REJUVENATE']
 
 export const BADGE_TEXT = 'GROWTH • STRATEGY • PERFORMANCE • '
 
@@ -102,16 +94,19 @@ export const SERVICES = [
  */
 export const WORK = [
   {
-    client: 'Client One',
-    sector: 'Sector · Category',
+    client: 'Dolce Beauty Lounge',
+    sector: 'Beauty & Skincare · Virginia Beach',
     result: 'Headline result',
     body: 'Placeholder case study copy, sized to show how two lines of summary sit under the media well.',
+    /** Live site, embedded in the card. Must allow framing — see SiteEmbed. */
+    url: 'https://mgish11.github.io/dolce-beauty-lounge/',
   },
   {
-    client: 'Client Two',
-    sector: 'Sector · Category',
+    client: 'Kristina Furia',
+    sector: 'Coaching & Therapy · Breathwork',
     result: 'Headline result',
     body: 'One sentence on the problem, one on what you changed. Keep it to roughly this length.',
+    url: 'https://mgish11.github.io/Kristina-Furia-site/',
   },
   {
     client: 'Client Three',

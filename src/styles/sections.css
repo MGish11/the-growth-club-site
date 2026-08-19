@@ -251,6 +251,53 @@
   border: 1px solid var(--rule);
 }
 
+/* ————— Live site embed ———————————————————————————————————————— */
+
+/* The frame is laid out at --embed-w and scaled to the well, so the site
+   sees a desktop viewport. --embed-scale / --embed-h are set from the
+   measured well in SiteEmbed. */
+.embed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--wash);
+}
+
+.embed__frame {
+  width: var(--embed-w);
+  height: var(--embed-h, 100%);
+  border: 0;
+  transform: scale(var(--embed-scale, 1));
+  transform-origin: top left;
+  /* Inert until activated, so a visitor scrolling the page past this card
+     is not captured by the frame. */
+  pointer-events: none;
+}
+
+.embed.is-active .embed__frame {
+  pointer-events: auto;
+}
+
+.embed__cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 0;
+  font: inherit;
+  color: var(--cream);
+  background: color-mix(in srgb, var(--deep) 45%, transparent);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.embed__cover:hover,
+.embed__cover:focus-visible {
+  background: color-mix(in srgb, var(--deep) 20%, transparent);
+}
+
 .work__meta {
   display: flex;
   align-items: baseline;

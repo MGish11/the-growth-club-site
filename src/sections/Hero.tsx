@@ -8,13 +8,19 @@ import { Reveal } from '../components/Reveal'
  * rotating seal, and the service ticker on the bottom rule.
  */
 export function Hero() {
+  // Founded this year: 'EST. 2026 — 2026' reads as a typo, so collapse the span.
+  const span =
+    BRAND.founded === String(BRAND.year)
+      ? `EST. ${BRAND.founded}`
+      : `EST. ${BRAND.founded} — ${BRAND.year}`
+
   return (
     <section className="hero section section--deep section--flush" id="top">
       <div className="hero__inner wrap">
         <Reveal className="hero__meta" stagger>
           <p className="t-label">{BRAND.tagline}</p>
           <p className="t-label hero__meta-right">
-            EST. {BRAND.founded} — {BRAND.year} <br /> {BRAND.availability}
+            {span} <br /> {BRAND.availability}
           </p>
         </Reveal>
 
