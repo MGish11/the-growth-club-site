@@ -6,6 +6,7 @@ import { Services } from './sections/Services'
 import { Work } from './sections/Work'
 import { Process } from './sections/Process'
 import { Pricing } from './sections/Pricing'
+import { Inquire } from './sections/Inquire'
 import { Contact } from './sections/Contact'
 import './styles/sections.css'
 
@@ -21,6 +22,7 @@ export default function App() {
         <Work />
         <Process />
         <Pricing />
+        <Inquire />
       </main>
       <Contact />
     </>

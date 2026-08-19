@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw camera originals. Web-ready transcodes live in public/portfolio/drone/;
+# the untouched files are hundreds of MB and exceed GitHub's per-file limit.
+/DJI_*.MP4
+/DJI_*.JPG
+/image (*).png
+/Organic Tour*.png

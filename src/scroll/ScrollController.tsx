@@ -3,6 +3,7 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { LENIS } from '../config/tuning'
+import { setLenis } from './lenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -29,6 +30,7 @@ export function ScrollController() {
     })
 
     lenis.on('scroll', ScrollTrigger.update)
+    setLenis(lenis)
 
     const raf = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(raf)
@@ -44,6 +46,7 @@ export function ScrollController() {
 
     return () => {
       gsap.ticker.remove(raf)
+      setLenis(null)
       lenis.destroy()
     }
   }, [])

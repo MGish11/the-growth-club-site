@@ -28,10 +28,7 @@ export function Hero() {
 
         <div className="hero__base">
           <Reveal className="hero__pitch">
-            <p className="t-body t-body--lg">
-              A senior growth team for brands that have outgrown guesswork. We instrument, test and
-              scale the channels that actually move revenue — and cut the ones that do not.
-            </p>
+            <p className="t-body t-body--lg">{BRAND.pitch}</p>
           </Reveal>
           <CircleBadge text={BADGE_TEXT} size={150} className="hero__badge">
             <span className="t-label hero__badge-dot">↓</span>

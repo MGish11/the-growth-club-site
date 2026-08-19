@@ -214,10 +214,146 @@
 
 /* ————— Work ——————————————————————————————————————————————————— */
 
+.work__intro {
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vh, 3rem);
+}
+
+.work__heading {
+  color: var(--deep);
+  margin-bottom: 1rem;
+}
+
+.work__body-lead {
+  color: var(--accent-2);
+}
+
+.work__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.work__filter {
+  padding: 0.5rem 1rem;
+  color: var(--accent-2);
+  background: transparent;
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  font: inherit;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.work__filter:hover,
+.work__filter:focus-visible {
+  color: var(--deep);
+  border-color: var(--deep);
+}
+
+.work__filter.is-on {
+  color: var(--cream);
+  background: var(--deep);
+  border-color: var(--deep);
+}
+
 .work__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 3rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.work__cell {
+  min-width: 0;
+}
+
+/* ————— Portfolio piece (cream ground) ————————————————————————— */
+
+.piece {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+}
+
+button.piece {
+  cursor: pointer;
+}
+
+/* A common crop keeps the grid even; the uncropped piece is in the
+   lightbox, which is where a brochure or infographic gets read. */
+.piece__media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--wash);
+  border: 1px solid var(--rule);
+}
+
+.piece__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+button.piece:hover .piece__media img,
+button.piece:focus-visible .piece__media img {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+/* Portrait work shown whole rather than cropped to the landscape well. */
+.piece__media--contain img {
+  object-fit: contain;
+  padding: 0.75rem;
+}
+
+.piece__play {
+  position: absolute;
+  inset: auto auto 0.75rem 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--deep);
+  background: var(--cream);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  padding-left: 0.15em; /* optical: the glyph sits left of its own box */
+  pointer-events: none;
+}
+
+.piece__media--empty {
+  display: grid;
+  place-items: center;
+  border-style: dashed;
+  color: var(--accent-2);
+}
+
+.piece__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.piece__title {
+  color: var(--deep);
+}
+
+.piece__cat {
+  color: var(--accent-2);
 }
 
 .work__card {
@@ -323,6 +459,320 @@
   .work__grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ————— Inquire ———————————————————————————————————————————————— */
+
+.u-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.inquire__intro {
+  max-width: 46rem;
+  margin-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+.inquire__heading {
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.inquire__body {
+  color: var(--accent-2);
+}
+
+.inquire__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field > label,
+.field > span {
+  color: var(--accent-2);
+}
+
+.inquire__optional {
+  color: var(--accent-2);
+  opacity: 0.6;
+}
+
+/* Inputs sit on the deep ground as ruled lines rather than boxes, which is
+   the only treatment in this design language that does not read as chrome. */
+.field input:not([type='file']),
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0;
+  color: var(--cream);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule-inv);
+  border-radius: 0;
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.field select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.field select option {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--accent-2);
+  opacity: 0.7;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--cream);
+}
+
+.inquire__note {
+  color: var(--accent-2);
+  max-width: 40rem;
+  margin-top: 0.25rem;
+}
+
+/* The native control is hidden but still focusable, so the label carries
+   the focus ring on its behalf. */
+.drop {
+  display: block;
+  padding: 1.25rem;
+  border: 1px dashed var(--rule-inv);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.drop:hover {
+  border-color: var(--cream);
+  background: #eeede40d;
+}
+
+.drop:has(input:focus-visible) {
+  border-color: var(--cream);
+  background: #eeede40d;
+}
+
+.drop input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drop__cue {
+  color: var(--accent-2);
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  overflow: hidden;
+  background: #eeede41a;
+  border: 1px solid var(--rule-inv);
+  color: var(--accent-2);
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb__x {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.25rem;
+  color: var(--cream);
+  background: color-mix(in srgb, var(--deep) 80%, transparent);
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.inquire__tally {
+  color: var(--accent-2);
+  margin-top: 0.75rem;
+}
+
+/* .field stacks its children in a column; the actions row does not. */
+.inquire__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.inquire__submit {
+  padding: 0.875rem 1.75rem;
+  color: var(--deep);
+  background: var(--cream);
+  border: 1px solid var(--cream);
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.inquire__submit:hover:not(:disabled),
+.inquire__submit:focus-visible:not(:disabled) {
+  color: var(--cream);
+  background: transparent;
+}
+
+.inquire__submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.inquire__status {
+  color: var(--cream);
+  flex: 1 1 18rem;
+}
+
+.inquire__status:empty {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .inquire__form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ————— Lightbox ——————————————————————————————————————————————— */
+
+.lightbox {
+  width: min(92vw, 76rem);
+  max-width: none;
+  max-height: 92vh;
+  padding: 0;
+  color: var(--cream);
+  background: var(--deep);
+  border: 1px solid var(--rule-inv);
+}
+
+.lightbox::backdrop {
+  background: #06132ee6;
+}
+
+.lightbox__inner {
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+}
+
+/* The image scrolls inside the dialog rather than the dialog growing —
+   an infographic is far taller than any viewport. */
+/* Natural size, never upscaled — a 800px poster blown up to the dialog's
+   full width is mush. Anything taller than the dialog scrolls inside it,
+   which is what a long infographic needs. */
+.lightbox__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.lightbox__inner {
+  overflow-y: auto;
+}
+
+.lightbox__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 78vh;
+  background: #000;
+}
+
+.lightbox__bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  background: var(--deep);
+  border-top: 1px solid var(--rule-inv);
+}
+
+.lightbox__cat,
+.lightbox__note {
+  color: var(--accent-2);
+}
+
+.lightbox__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lightbox__link {
+  color: var(--cream);
+}
+
+.lightbox__close {
+  padding: 0.5rem 1rem;
+  color: var(--deep);
+  background: var(--cream);
+  border: 1px solid var(--cream);
+  cursor: pointer;
+  font: inherit;
+}
+
+.lightbox__close:hover,
+.lightbox__close:focus-visible {
+  color: var(--cream);
+  background: transparent;
 }
 
 /* ————— Process ———————————————————————————————————————————————— */

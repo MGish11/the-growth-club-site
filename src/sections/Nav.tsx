@@ -18,7 +18,7 @@ export function Nav() {
           </a>
         ))}
       </nav>
-      <a className="t-label nav__cta" href="#contact">
+      <a className="t-label nav__cta" href="#inquire">
         Book a call
       </a>
     </header>

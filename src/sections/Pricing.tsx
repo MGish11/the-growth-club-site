@@ -27,7 +27,7 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <a className="t-label pricing__cta" href="#contact">
+              <a className="t-label pricing__cta" href="#inquire">
                 Start here →
               </a>
             </article>
