@@ -1,0 +1,30 @@
+# Caching rules. Understood by Cloudflare Pages and Netlify; ignored elsewhere.
+#
+# The drone reel is ~30MB of the ~32MB this site ships, so repeat visits hitting
+# cache rather than the network is the single biggest lever on bandwidth here.
+
+# Vite fingerprints these, so the filename changes whenever the content does.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Stable filenames, so a long life is a deliberate trade: re-encoding a clip
+# means purging the CDN cache, or returning visitors keep being served the old
+# file. Re-encode under a new name instead and the problem does not arise.
+/portfolio/*
+  Cache-Control: public, max-age=31536000
+
+/og.png
+  Cache-Control: public, max-age=31536000
+
+/mark.svg
+  Cache-Control: public, max-age=31536000
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=31536000
+
+# The entry point must never be cached hard, or a deploy will not reach anyone.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
