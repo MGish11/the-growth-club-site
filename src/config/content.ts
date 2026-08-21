@@ -231,18 +231,22 @@ export const PROCESS = [
 ] as const
 
 /**
- * Prices are yours to set — these are structural placeholders showing
- * how three tiers sit in the grid, not a recommendation.
- */
-/**
- * Keep price values short (4-5 characters) — the display font is sized to
- * them and a longer string breaks the row.
+ * Three engagements, positioned rather than priced.
+ *
+ * Figures are deliberately absent while the business is finding its rate:
+ * a number on the page is the one thing you cannot negotiate up, and a
+ * posted price turns away work that would have been a good fit. `rank`
+ * carries the comparison instead, and PRICING_NOTE says where the number
+ * actually comes from.
+ *
+ * Keep `rank` to one short word — it is set in the display face at 70px
+ * and a longer string breaks the row.
  */
 export const PRICING = [
   {
     name: 'Footprint',
-    price: '$500',
-    cadence: 'one-time',
+    rank: 'Good',
+    shape: 'One-time engagement',
     body: 'A full read of where you stand online today, with a prioritised plan for what to build first.',
     features: [
       'Digital footprint analysis',
@@ -254,8 +258,8 @@ export const PRICING = [
   },
   {
     name: 'Website Build',
-    price: '$2K+',
-    cadence: 'per project',
+    rank: 'Better',
+    shape: 'Per project',
     body: 'The core engagement. A custom site designed with you, built from scratch and tuned to convert.',
     features: [
       'Everything in Footprint',
@@ -268,8 +272,8 @@ export const PRICING = [
   },
   {
     name: 'Growth Retainer',
-    price: '$1K',
-    cadence: 'per month',
+    rank: 'Best',
+    shape: 'Ongoing, monthly',
     body: 'Ongoing search, social and lead generation once the site is live and earning its traffic.',
     features: [
       'Everything in Build',
@@ -281,6 +285,13 @@ export const PRICING = [
     featured: false,
   },
 ] as const
+
+/**
+ * Sits under the grid. Without it the section raises the price question and
+ * then refuses to answer it, which reads as evasive rather than flexible.
+ */
+export const PRICING_NOTE =
+  'Every engagement is scoped to the work in front of it, so the figure comes after the conversation rather than before it. Tell us what you have in mind and we will come back with a number and what it covers.'
 
 /**
  * Project inquiry form.
@@ -308,11 +319,12 @@ export const INQUIRY = {
   heading: 'TELL US WHAT YOU HAVE IN MIND',
   body: 'A few details and whatever you have already — a logo, photos, a site you like. It does not need to be organised. We read every one of these ourselves.',
   /**
-   * The posted tiers turn away people who would have been a good fit, so
-   * the budget field says so out loud rather than leaving them to guess.
+   * With nothing posted, people guess at what this costs — and they guess
+   * high, then talk themselves out of asking. The field says out loud that
+   * there is no floor to clear.
    */
   budgetNote:
-    'The prices above are starting points, not gates. Tell us what you are working with and we will tell you honestly what is possible for it.',
+    'There is no minimum to clear here. Tell us what you are working with and we will tell you honestly what is possible for it.',
   success: 'Thank you — that came through. We reply to every inquiry within two working days.',
   error: 'That did not send. Email us directly and we will pick it up from there.',
   unconfigured: 'The form is not connected to a backend yet — set INQUIRY.endpoint in content.ts.',
