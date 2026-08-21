@@ -23,6 +23,13 @@
   --wash: #0d34790d; /* 5% deep — faint fills */
   --rule-inv: #eeede433; /* 20% cream — hairlines on deep */
 
+  /* Form-only, and deliberately louder than the decorative pair above. A
+     hairline that reads as a divider is too faint to read as an input: at
+     20% cream the field rules sit at 1.7:1 on deep, under the 3:1 that
+     non-text UI needs. These two clear it. */
+  --rule-field: #eeede480; /* 50% cream — 3.6:1 on deep */
+  --label-inv: #9db0d0; /* accent-2 lifted to 5.3:1 for labels and hints */
+
   --font-display: 'Bebas Neue', Impact, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 

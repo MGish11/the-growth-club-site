@@ -485,7 +485,7 @@ button.piece:focus-visible .piece__media img {
 }
 
 .inquire__body {
-  color: var(--accent-2);
+  color: var(--label-inv);
 }
 
 .inquire__form {
@@ -507,12 +507,12 @@ button.piece:focus-visible .piece__media img {
 
 .field > label,
 .field > span {
-  color: var(--accent-2);
+  color: var(--label-inv);
 }
 
 .inquire__optional {
-  color: var(--accent-2);
-  opacity: 0.6;
+  color: var(--label-inv);
+  opacity: 0.75;
 }
 
 /* Inputs sit on the deep ground as ruled lines rather than boxes, which is
@@ -525,10 +525,10 @@ button.piece:focus-visible .piece__media img {
   color: var(--cream);
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--rule-inv);
+  border-bottom: 1px solid var(--rule-field);
   border-radius: 0;
   font-family: var(--font-body);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .field textarea {
@@ -548,29 +548,35 @@ button.piece:focus-visible .piece__media img {
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: var(--accent-2);
-  opacity: 0.7;
+  color: var(--label-inv);
+  opacity: 0.9;
 }
 
+/* Doubling the rule via box-shadow rather than border-width: a 2px border
+   would reflow the field by a pixel every time it takes focus. */
 .field input:focus-visible,
 .field select:focus-visible,
 .field textarea:focus-visible {
   outline: 0;
   border-bottom-color: var(--cream);
+  box-shadow: 0 1px 0 var(--cream);
 }
 
 .inquire__note {
-  color: var(--accent-2);
+  color: var(--label-inv);
   max-width: 40rem;
   margin-top: 0.25rem;
 }
 
 /* The native control is hidden but still focusable, so the label carries
    the focus ring on its behalf. */
+/* A faint wash at rest, so the zone reads as a target before you hover it
+   rather than as an empty stretch of the block. */
 .drop {
   display: block;
   padding: 1.25rem;
-  border: 1px dashed var(--rule-inv);
+  border: 1px dashed var(--rule-field);
+  background: #eeede40a;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
@@ -594,7 +600,7 @@ button.piece:focus-visible .piece__media img {
 }
 
 .drop__cue {
-  color: var(--accent-2);
+  color: var(--label-inv);
 }
 
 .thumbs {
@@ -614,8 +620,8 @@ button.piece:focus-visible .piece__media img {
   height: 5.5rem;
   overflow: hidden;
   background: #eeede41a;
-  border: 1px solid var(--rule-inv);
-  color: var(--accent-2);
+  border: 1px solid var(--rule-field);
+  color: var(--label-inv);
 }
 
 .thumb img {
@@ -636,7 +642,7 @@ button.piece:focus-visible .piece__media img {
 }
 
 .inquire__tally {
-  color: var(--accent-2);
+  color: var(--label-inv);
   margin-top: 0.75rem;
 }
 
