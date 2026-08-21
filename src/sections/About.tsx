@@ -2,7 +2,12 @@ import { ABOUT } from '../config/content'
 import { Statement } from '../components/Statement'
 import { Reveal } from '../components/Reveal'
 
-/** Cream block. The statement carries the wipe; the columns carry the texture. */
+/**
+ * Cream block. The statement carries the wipe; the columns carry the texture.
+ *
+ * A track-record stats row sat under the columns until there were real
+ * figures for it. Restore it here once those exist.
+ */
 export function About() {
   return (
     <section className="section about" id="about">
@@ -16,17 +21,6 @@ export function About() {
             <p className="t-body" key={i}>
               {col}
             </p>
-          ))}
-        </Reveal>
-
-        <hr className="rule about__rule" />
-
-        <Reveal className="about__stats" stagger>
-          {ABOUT.stats.map((stat) => (
-            <div className="about__stat" key={stat.label}>
-              <p className="t-subdisplay">{stat.value}</p>
-              <p className="t-label about__stat-label">{stat.label}</p>
-            </div>
           ))}
         </Reveal>
       </div>

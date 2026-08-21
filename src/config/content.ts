@@ -5,16 +5,15 @@
  * two lines longer than its neighbours breaks the block it sits in.
  * Match roughly what is there when rewriting.
  *
- * Blocks still marked PLACEHOLDER below are the ones that must not ship
- * invented — client names, results, testimonials, track-record figures.
+ * Everything here is real: the two client sites are live and embeddable,
+ * and the portfolio pieces are files in public/. The placeholder case
+ * studies, the invented testimonial and the empty stats row were cut
+ * rather than filled in, because a fake case study or an attributed
+ * quote that no one actually said is a false claim to anyone reading
+ * it, whether or not it was meant as filler.
  *
- * Placeholders are deliberately generic. Client names, results,
- * testimonials and track-record figures are the kind of thing that
- * must never reach a live site as invented copy — a fake case study
- * or an attributed quote that no one actually said is a false claim
- * to anyone reading it, whether or not it was meant as filler.
- * Replace them with real, verifiable content before launch, or cut
- * the section.
+ * The same bar applies to anything added later: name a client only with
+ * their permission, and quote a number only if you can stand behind it.
  */
 
 export const BRAND = {
@@ -155,16 +154,6 @@ export const ABOUT = {
     'Everything is made in house and from scratch — the site, the ad creative, the print, the aerial footage. Nothing is assembled from a template or pulled from a stock library, and nothing is handed off to a stranger.',
     'We are results-driven and obsessed with bringing your idea to life. Tell us how it should feel and we will build it — then judge it on what it returns, not on how nice it looks in a portfolio.',
   ],
-  /**
-   * PLACEHOLDER — these are your real numbers to fill in, not ours to
-   * invent. Keep the values short (2–5 characters) or the row breaks.
-   */
-  stats: [
-    { value: '—', label: 'Sites shipped' },
-    { value: '—', label: 'Campaigns run' },
-    { value: '—', label: 'Clients served' },
-    { value: '—', label: 'Years running' },
-  ],
 } as const
 
 export const SERVICES = [
@@ -196,39 +185,25 @@ export const SERVICES = [
 ] as const
 
 /**
- * PLACEHOLDER CASE STUDIES — every field here is a slot, not a claim.
- * Invented client names and results read as real case studies to anyone
- * visiting, so these stay generic until you have permission to name a
- * client and a number you can stand behind. Cut the section rather than
- * ship it filled in with anything approximate.
+ * Live client sites. Only the name, the sector and the site itself — the
+ * work is the claim here, and a visitor can scroll it in the card.
+ *
+ * No `result` or summary field: a headline number needs the client's
+ * permission and a figure you can stand behind, and approximate is the
+ * same as invented once it is on a live site. Add those back per entry
+ * only alongside a real number.
  */
 export const WORK = [
   {
     client: 'Dolce Beauty Lounge',
     sector: 'Beauty & Skincare · Virginia Beach',
-    result: 'Headline result',
-    body: 'Placeholder case study copy, sized to show how two lines of summary sit under the media well.',
     /** Live site, embedded in the card. Must allow framing — see SiteEmbed. */
     url: 'https://mgish11.github.io/dolce-beauty-lounge/',
   },
   {
     client: 'Kristina Furia',
     sector: 'Coaching & Therapy · Breathwork',
-    result: 'Headline result',
-    body: 'One sentence on the problem, one on what you changed. Keep it to roughly this length.',
     url: 'https://mgish11.github.io/Kristina-Furia-site/',
-  },
-  {
-    client: 'Client Three',
-    sector: 'Sector · Category',
-    result: 'Headline result',
-    body: 'Placeholder case study copy, sized to show how two lines of summary sit under the media well.',
-  },
-  {
-    client: 'Client Four',
-    sector: 'Sector · Category',
-    result: 'Headline result',
-    body: 'One sentence on the problem, one on what you changed. Keep it to roughly this length.',
   },
 ] as const
 
@@ -254,18 +229,6 @@ export const PROCESS = [
     body: 'Once it is live we watch what people actually do, then keep tightening the pages, ads and creative that carry the traffic.',
   },
 ] as const
-
-/**
- * PLACEHOLDER — an invented quote attributed to a named person at a
- * named company is a fabricated endorsement, full stop. Use a real one
- * with the client's sign-off, or delete the block from Process.tsx.
- */
-export const TESTIMONIAL = {
-  quote:
-    'PLACEHOLDER TESTIMONIAL COPY, SET AT ROUGHLY THE LENGTH A REAL CLIENT QUOTE SHOULD RUN TO IN THIS BLOCK.',
-  name: 'Client name',
-  role: 'Title, Company',
-} as const
 
 /**
  * Prices are yours to set — these are structural placeholders showing
@@ -353,7 +316,7 @@ export const INQUIRY = {
   success: 'Thank you — that came through. We reply to every inquiry within two working days.',
   error: 'That did not send. Email us directly and we will pick it up from there.',
   unconfigured: 'The form is not connected to a backend yet — set INQUIRY.endpoint in content.ts.',
-  subject: 'New inquiry from thegrowthclub.com',
+  subject: 'New inquiry from thegrowth-club.com',
 } as const
 
 export const PROJECT_TYPES = [

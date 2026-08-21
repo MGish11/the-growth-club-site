@@ -116,8 +116,6 @@ export function Work() {
                   <h3 className="t-section">{item.client}</h3>
                   <p className="t-label work__sector">{item.sector}</p>
                 </div>
-                <p className="t-body work__body">{item.body}</p>
-                <p className="t-eyebrow work__result">{item.result}</p>
               </article>
             </li>
           ))}

@@ -1,8 +1,12 @@
-import { PROCESS, TESTIMONIAL } from '../config/content'
+import { PROCESS } from '../config/content'
 import { Reveal } from '../components/Reveal'
-import { Statement } from '../components/Statement'
 
-/** Deep block: four steps, then the pull quote on the same ground. */
+/**
+ * Deep block: the four steps.
+ *
+ * A pull quote sat under these until there was a real client quote to put
+ * in it. Restore the figure here when one arrives with sign-off.
+ */
 export function Process() {
   return (
     <section className="section section--deep process" id="process">
@@ -19,15 +23,6 @@ export function Process() {
             </article>
           ))}
         </Reveal>
-
-        <hr className="rule process__rule" />
-
-        <figure className="process__quote">
-          <Statement text={TESTIMONIAL.quote} className="t-quote process__quote-text" />
-          <figcaption className="t-label process__attrib">
-            {TESTIMONIAL.name} — {TESTIMONIAL.role}
-          </figcaption>
-        </figure>
       </div>
     </section>
   )
